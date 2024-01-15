@@ -9,7 +9,7 @@ import jakarta.validation.constraints.Size;
 import java.util.Objects;
 
 @Entity
-@Table(name = "\"usuario\"")
+@Table(name = "\"user\"")
 public class User {
     public interface CreateUser{}
     public interface UpdateUser{}
@@ -18,18 +18,18 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", unique = true)
     private Long id;
-    @Column(name = "usuario",length = 100,nullable = false,unique = true)
+    @Column(name = "username",length = 100,nullable = false,unique = true)
     @NotNull(groups = CreateUser.class) //valor nulo
     @NotEmpty(groups = CreateUser.class) //string vazia
     @Size(groups = CreateUser.class, min = 2,max = 50)
-    private String usuario;
+    private String username;
 
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)// garante que a senha seja so de escrita
-    @Column(name = "senha",length = 40,nullable = false)
+    @Column(name = "password",length = 40,nullable = false)
     @NotNull(groups = {CreateUser.class, UpdateUser.class})
     @NotEmpty(groups = {CreateUser.class, UpdateUser.class})
     @Size(groups = {CreateUser.class, UpdateUser.class}, min = 8,max = 30)
-    private String senha;
+    private String password;
 
 
     public User() {
@@ -37,8 +37,8 @@ public class User {
 
     public User(Long id, String usuario, String senha) {
         this.id = id;
-        this.usuario = usuario;
-        this.senha = senha;
+        this.username = username;
+        this.password = password;
     }
 
     public Long getId() {
@@ -49,20 +49,20 @@ public class User {
         this.id = id;
     }
 
-    public String getUsuario() {
-        return usuario;
+    public String getUsername() {
+        return username;
     }
 
-    public void setUsuario(String usuario) {
-        this.usuario = usuario;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
-    public String getSenha() {
-        return senha;
+    public String getPassword() {
+        return password;
     }
 
-    public void setSenha(String senha) {
-        this.senha = senha;
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     @Override
@@ -76,8 +76,8 @@ public class User {
             return other.id == null;
         } else {
             return id.equals(other.id) &&
-                    Objects.equals(usuario, other.usuario) &&
-                    Objects.equals(senha, other.senha);
+                    Objects.equals(username, other.username) &&
+                    Objects.equals(password, other.password);
         }
     }
 
@@ -89,3 +89,6 @@ public class User {
         return result;
     }
 }
+
+
+
