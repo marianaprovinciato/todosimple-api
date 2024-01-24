@@ -2,6 +2,7 @@ package com.example.todosimple.services;
 
 import com.example.todosimple.models.User;
 import com.example.todosimple.repositories.UserRepository;
+import com.example.todosimple.services.exceptions.ObjectNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -16,7 +17,7 @@ public class UserService {
 
     public User findById(Long id) {
         Optional<User> user = this.userRepository.findById(id);
-        return user.orElseThrow(() -> new RuntimeException(
+        return user.orElseThrow(() -> new ObjectNotFoundException(
                 "Usuário não encontrado! ID:" + id + ", Tipo: " + User.class.getName())
         );
     }
@@ -40,7 +41,7 @@ public class UserService {
         try{
             this.userRepository.deleteById(id);
         } catch (Exception e) {
-            throw new RuntimeException("Não é possivel excluir, pois há tasks relacionadas!");
+            throw new RuntimeException("Não é possivel excluir, pois há entidades relacionadas!");
         }
 
     }
